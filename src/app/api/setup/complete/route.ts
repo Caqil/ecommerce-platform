@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
     const envPath = join(process.cwd(), '.env.local')
     
     if (existsSync(envPath)) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const envContent = require('fs').readFileSync(envPath, 'utf8')
       const updatedEnv = envContent + '\n# Setup completed\nSETUP_COMPLETED=true\n'
       writeFileSync(envPath, updatedEnv)

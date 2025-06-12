@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     }
 
     await db.collection('settings').updateOne(
-      { _id: 'app_settings' },
+      { id: 'app_settings' },
       { 
         $set: {
           ...storeSettings,
