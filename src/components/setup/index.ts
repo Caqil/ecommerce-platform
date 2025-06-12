@@ -1,7 +1,0 @@
-export { default as SetupLayout } from './setup-layout'
-export { default as LicenseVerification } from './license-verification'
-export { default as DatabaseConfiguration } from './database-configuration'
-export { default as AdminCreation } from './admin-creation'
-export { default as StoreConfiguration } from './store-configuration'
-export { default as InstallationProgress } from './installation-progress'
-export { default as SetupComplete } from './setup-complete'
