@@ -92,18 +92,7 @@ const nextConfig = {
         destination: '/admin/dashboard',
         permanent: false,
       },
-      {
-        source: '/setup',
-        destination: '/setup',
-        permanent: false,
-        has: [
-          {
-            type: 'cookie',
-            key: 'setup-completed',
-            value: 'true',
-          },
-        ],
-      },
+      
     ]
   },
 

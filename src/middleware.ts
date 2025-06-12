@@ -5,53 +5,35 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Skip middleware for static assets and API routes during build
+  // Skip middleware for static assets, API routes, and files
   if (
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/api/') ||
     pathname.includes('.') ||
-    pathname.startsWith('/favicon')
+    pathname.startsWith('/favicon') ||
+    pathname.startsWith('/icons/') ||
+    pathname.startsWith('/images/')
   ) {
     return NextResponse.next()
   }
 
-  // Check if setup is completed via environment or headers
-  const isSetupCompleted = process.env.SETUP_COMPLETED === 'true'
-  
-  // Setup routes
-  const isSetupRoute = pathname.startsWith('/setup')
-  
-  // Admin and protected routes
+  // Define protected routes that require authentication
   const isAdminRoute = pathname.startsWith('/admin')
-  const isProtectedRoute = isAdminRoute
-
-  // If setup is not completed
-  if (!isSetupCompleted) {
-    // Allow setup routes
-    if (isSetupRoute) {
-      return NextResponse.next()
-    }
-
-    // Allow root page to show setup redirect
-    if (pathname === '/') {
-      return NextResponse.next()
-    }
-
-    // Redirect protected routes to setup
-    if (isProtectedRoute) {
-      return NextResponse.redirect(new URL('/setup', request.url))
-    }
-
-    // Allow other public routes
+  
+  // For admin routes, you can add authentication logic here
+  if (isAdminRoute) {
+    // TODO: Add authentication check here
+    // Example:
+    // const token = request.cookies.get('auth-token')
+    // if (!token) {
+    //   return NextResponse.redirect(new URL('/login', request.url))
+    // }
+    
+    // For now, allow all admin routes
     return NextResponse.next()
   }
 
-  // If setup is completed but trying to access setup routes
-  if (isSetupCompleted && isSetupRoute) {
-    return NextResponse.redirect(new URL('/', request.url))
-  }
-
-  // Allow all routes after setup is completed
+  // Allow all other routes
   return NextResponse.next()
 }
 
